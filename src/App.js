@@ -1,9 +1,9 @@
-function App() {
+import TitleBar from "./components/TitleBar"
+
+export default function App() {
   return (
-    <div>
-      <h1>Hello Electron!</h1>
-    </div>
+    <>
+      <TitleBar />
+    </>
   )
 }
-
-export default App

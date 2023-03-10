@@ -8,6 +8,7 @@
 - npm (v6.14.11)
 - react (v18.2.0) + JS
 - electron (v23.1.3)
+- styled-components (v5.3.8)
 
 ## Getting Started
 
