@@ -4,11 +4,12 @@
 
 ## dependencies
 
-- node (v14.16.0)
-- npm (v6.14.11)
-- react (v18.2.0) + JS
-- electron (v23.1.3)
-- styled-components (v5.3.8)
+- node : v14.16.0
+- npm : v6.14.11
+- react : v18.2.0
+- electron : v23.1.3
+- styled-components : v5.3.8
+- antd : v5.3.0
 
 ## Getting Started
 
