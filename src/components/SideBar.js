@@ -1,19 +1,100 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { Collapse } from "antd"
 import { palettes } from "../styles/palettes"
+import TreeView from "./TreeView"
+
+const nodes = [
+  {
+    type: "FOLDER",
+    id: "Folder 1",
+    name: "Folder 1",
+    children: [],
+  },
+  {
+    type: "FOLDER",
+    id: "Folder 2",
+    name: "Folder 2",
+    children: [
+      {
+        type: "FILE",
+        id: "File 1",
+        name: "File 1",
+      },
+      {
+        type: "FILE",
+        id: "File 2",
+        name: "File 2",
+      },
+      {
+        type: "FILE",
+        id: "File 3",
+        name: "File 3",
+      },
+      {
+        type: "FILE",
+        id: "File 4",
+        name: "File 4",
+      },
+      {
+        type: "FILE",
+        id: "File 5",
+        name: "File 5",
+      },
+      {
+        type: "FILE",
+        id: "File 6",
+        name: "File 6",
+      },
+      {
+        type: "FILE",
+        id: "File 7",
+        name: "File 7",
+      },
+      {
+        type: "FILE",
+        id: "File 8",
+        name: "File 8",
+      },
+      {
+        type: "FILE",
+        id: "File 9",
+        name: "File 9",
+      },
+      {
+        type: "FILE",
+        id: "File 10",
+        name: "File 10",
+      },
+    ],
+  },
+]
+
+const defaultCategories = [
+  {
+    header: "Category 1",
+    key: "Category 1",
+    nodes,
+  },
+  {
+    header: "Category 2",
+    key: "Category 2",
+    nodes,
+  },
+]
 
 export default function SideBar() {
+  const [categories, setCategories] = useState(defaultCategories)
+
   return (
     <Container>
-      <CustomCollapse defaultActiveKey={[]}>
-        <Collapse.Panel header="Category 1" key="Category 1">
-          <Content>1</Content>
-        </Collapse.Panel>
-        <Collapse.Panel header="Category 2" key="Category 2">
-          <Content>2</Content>
-        </Collapse.Panel>
-      </CustomCollapse>
+      <StyledCollapse>
+        {categories.map(({ header, key, nodes }) => (
+          <Collapse.Panel header={header} key={key}>
+            <TreeView nodes={nodes} />
+          </Collapse.Panel>
+        ))}
+      </StyledCollapse>
     </Container>
   )
 }
@@ -22,43 +103,18 @@ const Container = styled.nav`
   width: 230px;
 `
 
-const CustomCollapse = styled(Collapse)`
+const StyledCollapse = styled(Collapse)`
   border: none;
-  border-radius: 0px;
+  background-color: ${palettes.gray[1]};
 
-  :where(.css-dev-only-do-not-override-1me4733).ant-collapse
-    > .ant-collapse-item
-    > .ant-collapse-header {
-    padding: 0px 4px;
+  .ant-collapse-item > .ant-collapse-header {
     height: 23px;
-    border-radius: 0;
-    background-color: ${palettes.gray[1]};
-    border: none;
+    padding: 0 0 0 10px;
+    align-items: center;
   }
 
-  :where(.css-dev-only-do-not-override-1me4733).ant-collapse
-    > .ant-collapse-item:last-child,
-  :where(.css-dev-only-do-not-override-1me4733).ant-collapse
-    > .ant-collapse-item:last-child
-    > .ant-collapse-header {
-    border-radius: 0;
-    border: none;
-  }
-
-  .ant-collapse-item.ant-collapse-item-active {
-    border-radius: 0;
-    border: none;
-  }
-
-  :where(.css-dev-only-do-not-override-1me4733).ant-collapse
-    .ant-collapse-content
-    > .ant-collapse-content-box {
+  .ant-collapse-content > .ant-collapse-content-box {
     padding: 0;
+    border: none;
   }
-`
-
-const Content = styled.section`
-  box-sizing: border-box;
-  background-color: red;
-  padding: 10px;
 `
