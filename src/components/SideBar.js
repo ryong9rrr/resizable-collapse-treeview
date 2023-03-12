@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { Collapse } from "antd"
+import { Resizable } from "re-resizable"
 import { palettes } from "../styles/palettes"
 import TreeView from "./TreeView"
 
@@ -88,24 +89,71 @@ export default function SideBar() {
 
   return (
     <Container>
-      <StyledCollapse>
-        {categories.map(({ header, key, nodes }) => (
-          <Collapse.Panel header={header} key={key}>
-            <TreeView nodes={nodes} />
-          </Collapse.Panel>
-        ))}
-      </StyledCollapse>
+      <Resizable
+        minWidth="120px"
+        maxWidth="80vw"
+        defaultSize={{ width: "230px" }}
+        enable={{
+          top: false,
+          left: false,
+          right: true,
+          bottom: false,
+        }}
+      >
+        <StyledCollapse>
+          {categories.map(({ header, key, nodes }, index) => {
+            if (index === categories.length - 1) {
+              return (
+                <Collapse.Panel header={header} key={key}>
+                  <TreeView nodes={nodes} />
+                </Collapse.Panel>
+              )
+            }
+
+            return (
+              <Collapse.Panel header={header} key={key}>
+                <Resizable
+                  minWidth="100%"
+                  style={{ overflow: "hidden" }}
+                  defaultSize={{
+                    width: "100%",
+                  }}
+                  enable={{
+                    top: false,
+                    left: false,
+                    right: true,
+                    bottom: true,
+                  }}
+                >
+                  <TreeView nodes={nodes} />
+                </Resizable>
+              </Collapse.Panel>
+            )
+          })}
+        </StyledCollapse>
+      </Resizable>
+      <ResizeHandleBar />
     </Container>
   )
 }
 
 const Container = styled.nav`
-  width: 230px;
+  display: flex;
+`
+
+const ResizeHandleBar = styled.div`
+  width: 3px;
+  height: 100%;
+  background-color: ${palettes.gray[0]};
 `
 
 const StyledCollapse = styled(Collapse)`
   border: none;
   background-color: ${palettes.gray[1]};
+
+  .ant-collapse-item {
+    border: none;
+  }
 
   .ant-collapse-item > .ant-collapse-header {
     height: 23px;

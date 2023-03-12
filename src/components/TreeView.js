@@ -1,18 +1,6 @@
-import styled from "styled-components"
+import { styled } from "@mui/material/styles"
 import MuiTreeView from "@mui/lab/TreeView"
 import TreeItem from "@mui/lab/TreeItem"
-
-const FOLDER = "FOLDER"
-const FILE = "FILE"
-
-const LABEL_ICON = {
-  [FOLDER]: "🗂️",
-  [FILE]: "📄",
-}
-
-const isFolder = (type) => {
-  return type === FOLDER
-}
 
 const hasChildren = (node) => {
   return (
@@ -20,20 +8,12 @@ const hasChildren = (node) => {
   )
 }
 
-const renderForLabel = (type, name) => {
-  return `${LABEL_ICON[type]} ${name}`
-}
-
-const EmptyFolder = () => {
-  return (
-    <div
-      style={{
-        padding: "5px 20px",
-      }}
-    >
-      폴더가 비었어요.
-    </div>
-  )
+const renderLabelForType = (type, name) => {
+  const icons = {
+    FOLDER: "🗂️",
+    FILE: "📄",
+  }
+  return `${icons[type]} ${name}`
 }
 
 export default function TreeView({ nodes }) {
@@ -42,13 +22,9 @@ export default function TreeView({ nodes }) {
       <TreeItem
         key={node.id}
         nodeId={node.id}
-        label={renderForLabel(node.type, node.name)}
+        label={renderLabelForType(node.type, node.name)}
       >
-        {hasChildren(node) ? (
-          node.children.map((node) => renderTree(node))
-        ) : isFolder(node.type) ? (
-          <EmptyFolder />
-        ) : null}
+        {hasChildren(node) && node.children.map((node) => renderTree(node))}
       </TreeItem>
     )
   }
@@ -57,6 +33,7 @@ export default function TreeView({ nodes }) {
     <StyledTreeView
       aria-label="file system navigator"
       sx={{ height: 277, overflowY: "auto" }}
+      defaultExpanded={nodes.map((node) => node.id)}
     >
       {nodes.map((root) => renderTree(root))}
     </StyledTreeView>
@@ -67,11 +44,16 @@ const StyledTreeView = styled(MuiTreeView)`
   li.MuiTreeItem-root > div {
     margin: 0;
     padding: 0;
+    height: 23px;
 
     .MuiTreeItem-iconContainer {
       margin: 0;
       width: 0;
       padding-left: 15px;
+    }
+
+    .MuiTreeItem-label {
+      font-size: 10px;
     }
   }
 `

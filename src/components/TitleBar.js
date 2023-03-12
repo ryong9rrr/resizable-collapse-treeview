@@ -35,7 +35,7 @@ export default function TitleBar() {
 }
 
 const Container = styled.header`
-  height: 30px;
+  min-height: 30px;
   box-sizing: border-box;
   position: relative;
   display: flex;

@@ -6,22 +6,28 @@ import { palettes } from "./styles/palettes"
 
 export default function App() {
   return (
-    <>
+    <Layout>
       <TitleBar />
-      <Layout>
+      <Main>
         <SideBar />
-        <Main />
-      </Layout>
-    </>
+        <MainView />
+      </Main>
+    </Layout>
   )
 }
 
 const Layout = styled.div`
   display: flex;
-  height: calc(100vh - 30px);
+  flex-direction: column;
+  height: 100vh;
 `
 
 const Main = styled.main`
+  display: flex;
+  flex: 1;
+`
+
+const MainView = styled.section`
   background-color: ${palettes.white[0]};
   flex: 1;
 `

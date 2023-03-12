@@ -10,6 +10,8 @@
 - electron : v23.1.3
 - styled-components : v5.3.8
 - antd : v5.3.0
+- material-ui : v5.x.x
+- re-resizable : v6.9.9
 
 ## Getting Started
 
