@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import { styled } from "@mui/material/styles"
 import MuiTreeView from "@mui/lab/TreeView"
 import TreeItem from "@mui/lab/TreeItem"
@@ -21,17 +21,29 @@ const renderLabelForType = (type, name) => {
 const DEFAULT_HEIGHT = 277
 
 export default function TreeView({ nodes }) {
+  const resizableRef = useRef(null)
+
+  const behindScroll = (ref) => {
+    ref.style.overflow = "hidden"
+  }
+
+  const showScroll = (ref) => {
+    ref.style.overflow = "hidden auto"
+    ref.style.width = "100%"
+  }
+
   const handleResizableStyle = (ref) => {
     const currentHeight = parseInt(ref.style.height, 10)
     const childrenHeight = Array.from(ref.children)
       .filter((node) => node.nodeName === "LI")
       .reduce((acc, $li) => acc + $li.offsetHeight, 0)
 
-    if (childrenHeight - 5 <= currentHeight) {
-      ref.style.overflow = "hidden"
+    const isEnough = childrenHeight - 5 <= currentHeight
+
+    if (isEnough) {
+      behindScroll(ref)
     } else {
-      ref.style.overflow = "hidden auto"
-      ref.style.width = "100%"
+      showScroll(ref)
     }
   }
 
@@ -41,6 +53,12 @@ export default function TreeView({ nodes }) {
         key={node.id}
         nodeId={node.id}
         label={renderLabelForType(node.type, node.name)}
+        onClick={() => {
+          if (!resizableRef.current) {
+            return
+          }
+          showScroll(resizableRef.current.resizable)
+        }}
       >
         {hasChildren(node) && node.children.map((node) => renderTree(node))}
       </TreeItem>
@@ -53,6 +71,8 @@ export default function TreeView({ nodes }) {
       defaultExpanded={nodes.map((node) => node.id)}
     >
       <Resizable
+        ref={resizableRef}
+        style={{ position: "", userSelect: "none" }}
         defaultSize={{ width: "100%", height: DEFAULT_HEIGHT }}
         enable={{
           top: false,
@@ -71,6 +91,8 @@ export default function TreeView({ nodes }) {
 }
 
 const StyledTreeView = styled(MuiTreeView)`
+  position: relative;
+
   li.MuiTreeItem-root > div {
     height: 23px;
 

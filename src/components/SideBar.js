@@ -91,7 +91,7 @@ export default function SideBar() {
         minWidth="10vh"
         maxWidth="80vw"
         defaultSize={{ width: "230px" }}
-        style={{ overflow: "hidden auto" }}
+        style={{ overflow: "hidden auto", userSelect: "none" }}
         enable={{
           top: false,
           left: false,
@@ -112,7 +112,7 @@ export default function SideBar() {
   )
 }
 
-const Container = styled.div`
+const Container = styled.nav`
   display: flex;
 `
 
