@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { Collapse } from "antd"
 import { Resizable } from "re-resizable"
@@ -71,7 +71,7 @@ const nodes = [
   },
 ]
 
-const defaultCategories = [
+const categories = [
   {
     header: "Category 1",
     key: "Category 1",
@@ -85,14 +85,13 @@ const defaultCategories = [
 ]
 
 export default function SideBar() {
-  const [categories, setCategories] = useState(defaultCategories)
-
   return (
     <Container>
       <Resizable
         minWidth="120px"
         maxWidth="80vw"
         defaultSize={{ width: "230px" }}
+        style={{ overflow: "hidden auto" }}
         enable={{
           top: false,
           left: false,
@@ -101,35 +100,11 @@ export default function SideBar() {
         }}
       >
         <StyledCollapse>
-          {categories.map(({ header, key, nodes }, index) => {
-            if (index === categories.length - 1) {
-              return (
-                <Collapse.Panel header={header} key={key}>
-                  <TreeView nodes={nodes} />
-                </Collapse.Panel>
-              )
-            }
-
-            return (
-              <Collapse.Panel header={header} key={key}>
-                <Resizable
-                  minWidth="100%"
-                  style={{ overflow: "hidden" }}
-                  defaultSize={{
-                    width: "100%",
-                  }}
-                  enable={{
-                    top: false,
-                    left: false,
-                    right: true,
-                    bottom: true,
-                  }}
-                >
-                  <TreeView nodes={nodes} />
-                </Resizable>
-              </Collapse.Panel>
-            )
-          })}
+          {categories.map(({ header, key, nodes }) => (
+            <Collapse.Panel header={header} key={key}>
+              <TreeView nodes={nodes} />
+            </Collapse.Panel>
+          ))}
         </StyledCollapse>
       </Resizable>
       <ResizeHandleBar />
@@ -137,12 +112,12 @@ export default function SideBar() {
   )
 }
 
-const Container = styled.nav`
+const Container = styled.div`
   display: flex;
 `
 
 const ResizeHandleBar = styled.div`
-  width: 3px;
+  width: 4px;
   height: 100%;
   background-color: ${palettes.gray[0]};
 `
@@ -150,10 +125,6 @@ const ResizeHandleBar = styled.div`
 const StyledCollapse = styled(Collapse)`
   border: none;
   background-color: ${palettes.gray[1]};
-
-  .ant-collapse-item {
-    border: none;
-  }
 
   .ant-collapse-item > .ant-collapse-header {
     height: 23px;

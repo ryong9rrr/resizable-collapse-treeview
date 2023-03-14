@@ -19,12 +19,13 @@ export default function App() {
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 `
 
 const Main = styled.main`
   display: flex;
   flex: 1;
+  max-height: calc(100vh - 30px);
 `
 
 const MainView = styled.section`

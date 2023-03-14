@@ -1,6 +1,8 @@
+import React from "react"
 import { styled } from "@mui/material/styles"
 import MuiTreeView from "@mui/lab/TreeView"
 import TreeItem from "@mui/lab/TreeItem"
+import { Resizable } from "re-resizable"
 
 const hasChildren = (node) => {
   return (
@@ -16,7 +18,22 @@ const renderLabelForType = (type, name) => {
   return `${icons[type]} ${name}`
 }
 
+const DEFAULT_HEIGHT = 277
+
 export default function TreeView({ nodes }) {
+  const handleResizableStyle = (ref) => {
+    const currentHeight = parseInt(ref.style.height, 10)
+    const childrenHeight = Array.from(ref.children)
+      .filter((node) => node.nodeName === "LI")
+      .reduce((acc, $li) => acc + $li.offsetHeight, 0)
+
+    if (childrenHeight <= currentHeight) {
+      ref.style.overflow = "hidden"
+    } else {
+      ref.style.overflow = "hidden auto"
+    }
+  }
+
   const renderTree = (node) => {
     return (
       <TreeItem
@@ -32,10 +49,23 @@ export default function TreeView({ nodes }) {
   return (
     <StyledTreeView
       aria-label="file system navigator"
-      sx={{ height: 277, overflowY: "auto" }}
+      style={{ overflow: "hidden" }}
       defaultExpanded={nodes.map((node) => node.id)}
     >
-      {nodes.map((root) => renderTree(root))}
+      <Resizable
+        defaultSize={{ width: "100%", height: DEFAULT_HEIGHT }}
+        enable={{
+          top: false,
+          left: false,
+          right: false,
+          bottom: true,
+        }}
+        onResize={(e, direction, ref, d) => {
+          handleResizableStyle(ref)
+        }}
+      >
+        {nodes.map((root) => renderTree(root))}
+      </Resizable>
     </StyledTreeView>
   )
 }
