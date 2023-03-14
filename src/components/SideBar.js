@@ -88,7 +88,7 @@ export default function SideBar() {
   return (
     <Container>
       <Resizable
-        minWidth="120px"
+        minWidth="10vh"
         maxWidth="80vw"
         defaultSize={{ width: "230px" }}
         style={{ overflow: "hidden auto" }}
@@ -125,6 +125,10 @@ const ResizeHandleBar = styled.div`
 const StyledCollapse = styled(Collapse)`
   border: none;
   background-color: ${palettes.gray[1]};
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   .ant-collapse-item > .ant-collapse-header {
     height: 23px;

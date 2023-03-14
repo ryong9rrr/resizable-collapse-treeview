@@ -27,10 +27,11 @@ export default function TreeView({ nodes }) {
       .filter((node) => node.nodeName === "LI")
       .reduce((acc, $li) => acc + $li.offsetHeight, 0)
 
-    if (childrenHeight <= currentHeight) {
+    if (childrenHeight - 5 <= currentHeight) {
       ref.style.overflow = "hidden"
     } else {
       ref.style.overflow = "hidden auto"
+      ref.style.width = "100%"
     }
   }
 
@@ -49,7 +50,6 @@ export default function TreeView({ nodes }) {
   return (
     <StyledTreeView
       aria-label="file system navigator"
-      style={{ overflow: "hidden" }}
       defaultExpanded={nodes.map((node) => node.id)}
     >
       <Resizable
@@ -72,8 +72,6 @@ export default function TreeView({ nodes }) {
 
 const StyledTreeView = styled(MuiTreeView)`
   li.MuiTreeItem-root > div {
-    margin: 0;
-    padding: 0;
     height: 23px;
 
     .MuiTreeItem-iconContainer {
@@ -84,6 +82,9 @@ const StyledTreeView = styled(MuiTreeView)`
 
     .MuiTreeItem-label {
       font-size: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 `
