@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import styled from "styled-components"
+import TitleBar from "./components/TitleBar"
+import SideBar from "./components/SideBar"
+import { palettes } from "./styles/palettes"
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Layout>
+      <TitleBar />
+      <Main>
+        <SideBar />
+        <MainView />
+      </Main>
+    </Layout>
+  )
 }
 
-export default App;
+const Layout = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`
+
+const Main = styled.main`
+  display: flex;
+  flex: 1;
+  max-height: calc(100vh - 30px);
+`
+
+const MainView = styled.section`
+  background-color: ${palettes.white[0]};
+  flex: 1;
+`

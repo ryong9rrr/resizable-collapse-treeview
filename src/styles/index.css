@@ -1,0 +1,15 @@
+@import "./reset.css";
+
+body {
+  margin: 0;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 10px;
+  color: #423f3e;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
